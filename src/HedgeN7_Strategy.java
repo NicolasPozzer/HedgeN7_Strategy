@@ -1,6 +1,6 @@
 import java.util.Random;
 
-public class Main {
+public class HedgeN7_Strategy {
 
 
     public static void main(String[] args) {
