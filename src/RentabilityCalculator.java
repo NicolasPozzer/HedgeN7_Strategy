@@ -14,7 +14,7 @@ public class RentabilityCalculator {
 
         // config pruebas
         int cantidadDeCuentasParaTestear = 10;
-        int cantidadDeTradesPorCuenta = 10000;
+        int cantidadDeTradesPorCuenta = 100;
 
         //llamado a funciones
         header();
@@ -78,7 +78,7 @@ public class RentabilityCalculator {
         promedioEfectividadEstrategia = acumDineroFinal / cantidadDeCuentasParaTestear;
         System.out.printf("\t Promedio: $ %.2f\n",promedioEfectividadEstrategia);
         //Funcion con resultados finales de la strategia
-        resultadoFinal(promedioEfectividadEstrategia, capitalInicial, cantidadDeTradesPorCuenta, detenerEjecucion, cantCuentasQuedamas);
+        resultadoFinal(promedioEfectividadEstrategia, capitalInicial, cantidadDeTradesPorCuenta, detenerEjecucion, cantCuentasQuedamas, cantidadDeCuentasParaTestear);
     }
 
     //funcion para correr bucle con pruebas de acierto
@@ -100,7 +100,7 @@ public class RentabilityCalculator {
     }
 
     public static void resultadoFinal(double promedioEfectividadEstrategia, double capitalInicial,
-                                      int cantTrades,boolean detenerEjecucion, int cantCuentasQuedamas) {
+                                      int cantTrades,boolean detenerEjecucion, int cantCuentasQuedamas, int cantidadDeCuentasParaTestear) {
 
         //Variables para obtener el porcentaje de rentabilidad
         double sobrante = promedioEfectividadEstrategia - capitalInicial;
@@ -133,6 +133,12 @@ public class RentabilityCalculator {
         }
 
         System.out.println("⚡ Cantidad de Cuentas Quemadas -> " + cantCuentasQuedamas);
+        double diff = 0.0; // sobrante
+        double probabilidadDeEstrategia = 0.0;
+        diff = cantidadDeCuentasParaTestear - cantCuentasQuedamas;// obtener sobrante
+        probabilidadDeEstrategia = (((diff / cantidadDeCuentasParaTestear) * 100));
+
+        System.out.println(" Probabilidad de Estrategia : %"+ probabilidadDeEstrategia);
 
     }
 
