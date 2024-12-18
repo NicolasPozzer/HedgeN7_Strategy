@@ -5,16 +5,16 @@ public class RentabilityCalculator {
 
         /* ⬇️CONFIGURAR⬇️ */
         // config estrategia
-        double capitalInicial = 10000.0;
+        double capitalInicial = 100.0;
         final double TP = 2.00; // Porcentaje de Take Profit de la cuenta
         final double SL = 1.00; // Porcentaje de stop loss de la cuenta
-        final double probabilidadAciertos = 35.33; // numero entero entre 0 y 100 (Ej. 50 seria el 50% de acierto).
-        final double comisiones = 0.07;
-        final double stopGestionDeRiesgo = 20.0; // si el capital inicial llega a un porcentaje menor a este se deja de operar
+        final double probabilidadAciertos = 37.33; // numero entero entre 0 y 100 (Ej. 50 seria el 50% de acierto).
+        final double comisiones = 0.15;
+        final double stopGestionDeRiesgo = 50.0; // si el capital inicial llega a un porcentaje menor a este se deja de operar
 
         // config pruebas
         int cantidadDeCuentasParaTestear = 10;
-        int cantidadDeTradesPorCuenta = 100;
+        int cantidadDeTradesPorCuenta = 10;
 
         //llamado a funciones
         header();
@@ -43,6 +43,9 @@ public class RentabilityCalculator {
             for (int j = 0; j < cantidadDeTradesPorCuenta; j++) { //Recorre Trades por cuenta
                 Boolean resultadoTrade = tradeRealizado(probabilidadAciertos);
 
+                //Descontar comisiones antes del trade
+                capitalActual = capitalActual - ((comisiones * capitalActual) / 100);
+
                 if (resultadoTrade) {
                     capitalActual = capitalActual + ((TP * capitalActual) / 100);
                 }else {
@@ -60,9 +63,6 @@ public class RentabilityCalculator {
             if(cuentaQuemada){
                 cantCuentasQuedamas = cantCuentasQuedamas + 1;
             }
-
-            //Descontar comisiones
-            capitalActual = capitalActual - ((comisiones * capitalActual) / 100);
 
             if(capitalActual >= capitalInicial){
                 System.out.printf("\t✅Capital: $ %.2f",capitalActual);
