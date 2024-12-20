@@ -1,23 +1,26 @@
 import java.util.Random;
 
-public class RentabilityCalculator {
+public class RentabilityCalculator2TPs {
     public static void main(String[] args) {    /* main */
 
         /* ⬇️CONFIGURAR⬇️ */
         // config estrategia
         double capitalInicial = 500.0;
-        final double TP = 2.04; // Porcentaje de Take Profit de la cuenta
+        final double TP1 = 0.38; // TP1 CON 0.50% DE RIESGO ES: 0.19. para el 1% es 0.38.
+        final double TP2 = 2.04; // TP2 CON 0.50% DE RIESGO ES: 1.04, TP2 CON 1.00% DE RIESGO ES: 2.04
         final double SL = 1.00; // Porcentaje de stop loss de la cuenta
-        final double probabilidadAciertos = 35.325; // numero entero entre 0 y 100 (Ej. 50 seria el 50% de acierto).
+        final double probabilidadAciertosTP1 = 23.55; // mi acierto: probabilidadAciertosTP1 = 23.55;
+        final double probabilidadAciertosTP2 = 47.1;    // mi acierto: probabilidadAciertosTP2 = 47.1;
         final double comisiones = 0.0;
-        final double stopGestionDeRiesgo = 50.0; // si el capital inicial llega a un porcentaje menor a este se deja de operar
+        final double stopGestionDeRiesgo = 50.00; // si el capital inicial llega a un porcentaje menor a este se deja de operar
 
         // config pruebas
         int cantidadDeCuentasParaTestear = 10000;
-        int cantidadDeTradesPorCuenta = 10;//500  //10000   //2500
+        int cantidadDeTradesPorCuenta = 1000;//500  //10000   //2500
 
 
-
+        // mi acierto: probabilidadAciertosTP1 = 23.55;
+        // mi acierto: probabilidadAciertosTP2 = 47.1;
 
 
 
@@ -27,14 +30,15 @@ public class RentabilityCalculator {
         //llamado a funciones
         header();
         testearRentabilidadDeCuentas(cantidadDeCuentasParaTestear, capitalInicial,
-                cantidadDeTradesPorCuenta, probabilidadAciertos, TP, SL, comisiones, stopGestionDeRiesgo);
+                cantidadDeTradesPorCuenta, probabilidadAciertosTP1, probabilidadAciertosTP2, TP1, TP2, SL, comisiones, stopGestionDeRiesgo);
     }
 
 
     /* =========FUNCIONES============== */
     public static void testearRentabilidadDeCuentas(int cantidadDeCuentasParaTestear,
                                                     double capitalInicial, int cantidadDeTradesPorCuenta,
-                                                    double probabilidadAciertos, double TP, double SL, double comisiones, double stopGestionDeRiesgo) {
+                                                    double probabilidadAciertosTP1, double probabilidadAciertosTP2,
+                                                    double TP1, double TP2, double SL, double comisiones, double stopGestionDeRiesgo) {
         double promedioEfectividadEstrategia = 0.0;
         double acumDineroFinal = 0.0;
 
@@ -49,15 +53,24 @@ public class RentabilityCalculator {
             boolean cuentaQuemada = false;// variable local que se resetea y contamos las cuentas quemadas
 
             for (int j = 0; j < cantidadDeTradesPorCuenta; j++) { //Recorre Trades por cuenta
-                Boolean resultadoTrade = tradeRealizado(probabilidadAciertos);
+                int resultadoTrade = tradeRealizado(probabilidadAciertosTP1, probabilidadAciertosTP2);
 
                 //Descontar comisiones antes del trade
                 capitalActual = capitalActual - ((comisiones * capitalActual) / 100);
 
-                if (resultadoTrade) {
-                    capitalActual = capitalActual + ((TP * capitalActual) / 100);
-                }else {
-                    capitalActual = capitalActual - ((SL * capitalActual) / 100);
+                switch (resultadoTrade){
+                    case 1:
+                        //incrementar capital con beneficio de tp1
+                        capitalActual = capitalActual + ((TP1 * capitalActual) / 100);
+                        break;
+                    case 2:
+                        //incrementar capital con beneficio de tp2
+                        capitalActual = capitalActual + ((TP2 * capitalActual) / 100);
+                        break;
+                    case 3:
+                        //incrementar capital con stop
+                        capitalActual = capitalActual - ((SL * capitalActual) / 100);
+                        break;
                 }
 
                 //preguntar si el capital actual esta por debajo del stopGestionDeRiesgo
@@ -90,17 +103,19 @@ public class RentabilityCalculator {
     }
 
     //funcion para correr bucle con pruebas de acierto
-    public static Boolean tradeRealizado(double probabilidadAciertos) {
+    public static int tradeRealizado(double probabilidadAciertosTP1, double probabilidadAciertosTP2) {
         Random random = new Random();
-        Boolean tradeAcertado = null;
-        double numRandom = 0;
+        int tradeAcertado = 0;
+        double numRandom = 0.0;
 
         numRandom = random.nextDouble(0,100); // numeros aleatorios desde el 0 al 100
 
-        if(numRandom >= probabilidadAciertos){
-            tradeAcertado = false;
-        }else{
-            tradeAcertado = true;
+        if(numRandom <= probabilidadAciertosTP1){
+            tradeAcertado = 1;
+        } else if (numRandom <= probabilidadAciertosTP2) {
+            tradeAcertado = 2;
+        } else{
+            tradeAcertado = 3;
         }
 
         // Si retorna True es decir que el trade fue exitoso, sino lo contrario
