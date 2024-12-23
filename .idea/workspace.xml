@@ -5,19 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f5c578e7-eca9-4de6-b476-7111dfbe2195" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/uiDesigner.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/HedgeN7_Strategy.iml" beforeDir="false" afterPath="$PROJECT_DIR$/HedgeN7_Strategy.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/HedgeN7_Strategy.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/RentabilityCalculator.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/RentabilityCalculator2TPs.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/otros_py/simTrading.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/otros_py/test.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/random.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo/GUIversion.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo/GUIversion.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo/RentabilityCalculator2TPs.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo/RentabilityCalculator2TPs.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -151,7 +141,7 @@
       <workItem from="1734871683136" duration="723000" />
       <workItem from="1734976840493" duration="4083000" />
       <workItem from="1734983848568" duration="215000" />
-      <workItem from="1734984208632" duration="3392000" />
+      <workItem from="1734984208632" duration="6767000" />
     </task>
     <servers />
   </component>
