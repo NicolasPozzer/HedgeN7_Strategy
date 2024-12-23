@@ -1,3 +1,5 @@
+package com.example.demo;
+
 import java.util.Random;
 
 public class HedgeN7_Strategy {
