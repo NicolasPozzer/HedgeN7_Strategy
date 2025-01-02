@@ -7,23 +7,23 @@ public class RentabilityCalculator2TPs {
 
         /* ⬇️CONFIGURAR⬇️ */
         // config estrategia
-        double capitalInicial = 500.0;
-        final double TP1 = 0.3709; // TP1 CON 0.50% DE RIESGO ES: 0.18545. para el 1% es 0.3709.
-        final double TP2 = 2.132; // TP2 CON 0.50% DE RIESGO ES: 1.0751, TP2 CON 1.00% DE RIESGO ES: 2.132
-        final double SL = 1; // Porcentaje de stop loss 0.50% DE RIESGO ES: 0.50, SL CON 1.00% DE RIESGO ES: 1
+        double capitalInicial = 10000;
+        final double TP1 = 0.092725; // TP1 CON 0.50% DE RIESGO ES: 0.18545. para el 1% es 0.3709.
+        final double TP2 = 0.53755; // TP2 CON 0.50% DE RIESGO ES: 1.0751, TP2 CON 1.00% DE RIESGO ES: 2.132
+        final double SL = 0.25; // Porcentaje de stop loss 0.50% DE RIESGO ES: 0.50, SL CON 1.00% DE RIESGO ES: 1
         final double probabilidadAciertosTP1 = 23.222; // mi acierto: probabilidadAciertosTP1 = 23.222;
         final double probabilidadAciertosTP2 = 27.778;    // mi acierto: probabilidadAciertosTP2 = 27.778;
         final double comisiones = 0.0;
-        final double stopGestionDeRiesgo = 50; // si el capital inicial llega a un porcentaje menor a este se deja de operar
+        final double stopGestionDeRiesgo = 20.0; // si el capital inicial llega a un porcentaje menor a este se deja de operar
 
 
         // config pruebas
-        int cantidadDeCuentasParaTestear = 10;
-        int cantidadDeTradesPorCuenta = 500;//500  //10000   //2500
+        int cantidadDeCuentasParaTestear = 10000;
+        int cantidadDeTradesPorCuenta = 10000;      //500  //10000   //2500
 
 
-        // mi acierto: probabilidadAciertosTP1 = 22.21;
-        // mi acierto: probabilidadAciertosTP2 = 27.75;
+        // mi acierto: probabilidadAciertosTP1 = 23.222;
+        // mi acierto: probabilidadAciertosTP2 = 27.778;
 
 
 

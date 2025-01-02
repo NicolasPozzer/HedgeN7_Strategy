@@ -6,7 +6,6 @@
   <component name="ChangeListManager">
     <list default="true" id="f5c578e7-eca9-4de6-b476-7111dfbe2195" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo/GUIversion.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo/GUIversion.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo/RentabilityCalculator2TPs.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo/RentabilityCalculator2TPs.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -42,35 +41,36 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Application.GUIversion.executor&quot;: &quot;Run&quot;,
-    &quot;Application.Main.executor&quot;: &quot;Run&quot;,
-    &quot;Application.RentabilityCalculator.executor&quot;: &quot;Run&quot;,
-    &quot;Application.RentabilityCalculator2TPs.executor&quot;: &quot;Run&quot;,
-    &quot;Application.com.example.demo.random.executor&quot;: &quot;Run&quot;,
-    &quot;Application.random.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;J:/Descargas-rigido/javafx-sdk-17.0.13/lib/javafx.web.jar&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Libraries&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
-    &quot;run.code.analysis.last.selected.profile&quot;: &quot;pProject Default&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.GUIversion.executor": "Run",
+    "Application.Main.executor": "Run",
+    "Application.RentabilityCalculator.executor": "Run",
+    "Application.RentabilityCalculator2TPs.executor": "Run",
+    "Application.com.example.demo.random.executor": "Run",
+    "Application.random.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "main",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "J:/Descargas-rigido/javafx-sdk-17.0.13/lib/javafx.web.jar",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Libraries",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2",
+    "run.code.analysis.last.selected.profile": "pProject Default",
+    "settings.editor.selected.configurable": "terminal",
+    "vue.rearranger.settings.migration": "true"
   },
-  &quot;keyToStringList&quot;: {
-    &quot;com.intellij.ide.scratch.ScratchImplUtil$2/New Scratch File&quot;: [
-      &quot;PLAIN_TEXT&quot;
+  "keyToStringList": {
+    "com.intellij.ide.scratch.ScratchImplUtil$2/New Scratch File": [
+      "PLAIN_TEXT"
     ]
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="Z:\YoProgramo\Mis Proyectos\HedgeN7_Strategy\src\otros_py" />
@@ -79,7 +79,7 @@
       <recent name="" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.GUIversion">
+  <component name="RunManager" selected="Application.RentabilityCalculator2TPs">
     <configuration name="GUIversion" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.example.demo.GUIversion" />
       <module name="demo" />
@@ -108,8 +108,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.GUIversion" />
         <item itemvalue="Application.RentabilityCalculator2TPs" />
+        <item itemvalue="Application.GUIversion" />
       </list>
     </recent_temporary>
   </component>
@@ -141,7 +141,15 @@
       <workItem from="1734871683136" duration="723000" />
       <workItem from="1734976840493" duration="4083000" />
       <workItem from="1734983848568" duration="215000" />
-      <workItem from="1734984208632" duration="6767000" />
+      <workItem from="1734984208632" duration="6829000" />
+      <workItem from="1734994283314" duration="1247000" />
+      <workItem from="1735003083085" duration="2977000" />
+      <workItem from="1735013826730" duration="1055000" />
+      <workItem from="1735041897604" duration="429000" />
+      <workItem from="1735042350227" duration="51000" />
+      <workItem from="1735061144080" duration="641000" />
+      <workItem from="1735245294824" duration="373000" />
+      <workItem from="1735822898571" duration="60000" />
     </task>
     <servers />
   </component>
