@@ -8,13 +8,12 @@ public class RentabilityCalculator2TPs {
         /* ⬇️CONFIGURAR⬇️ */
         // config estrategia
         double capitalInicial = 10000;
-        final double TP1 = 0.092725; // TP1 CON 0.50% DE RIESGO ES: 0.18545. para el 1% es 0.3709.
-        final double TP2 = 0.53755; // TP2 CON 0.50% DE RIESGO ES: 1.0751, TP2 CON 1.00% DE RIESGO ES: 2.132
-        final double SL = 0.25; // Porcentaje de stop loss 0.50% DE RIESGO ES: 0.50, SL CON 1.00% DE RIESGO ES: 1
-        final double probabilidadAciertosTP1 = 23.222; // mi acierto: probabilidadAciertosTP1 = 23.222;
-        final double probabilidadAciertosTP2 = 27.778;    // mi acierto: probabilidadAciertosTP2 = 27.778;
+        final double TP1 = 0.18545; // TP1 CON 0.50% DE RIESGO ES: 0.18545. para el 1% es 0.3709.
+        final double TP2 = 1.0751; // TP2 CON 0.50% DE RIESGO ES: 1.0751, TP2 CON 1.00% DE RIESGO ES: 2.132
+        final double SL = 0.50; // Porcentaje de stop loss 0.50% DE RIESGO ES: 0.50, SL CON 1.00% DE RIESGO ES: 1
+        final double probabilidadAciertosTP1 = 18.1818; // mi acierto: probabilidadAciertosTP1 = 23.222;
+        final double probabilidadAciertosTP2 = 29.8182;    // mi acierto: probabilidadAciertosTP2 = 27.778;
         final double comisiones = 0.0;
-        final double stopGestionDeRiesgo = 20.0; // si el capital inicial llega a un porcentaje menor a este se deja de operar
 
 
         // config pruebas
@@ -32,28 +31,46 @@ public class RentabilityCalculator2TPs {
 
         //llamado a funciones
         header();
-        testearRentabilidadDeCuentas(cantidadDeCuentasParaTestear, capitalInicial,
-                cantidadDeTradesPorCuenta, probabilidadAciertosTP1, probabilidadAciertosTP2, TP1, TP2, SL, comisiones, stopGestionDeRiesgo);
+        testearRentabilidadDeCuentas(cantidadDeCuentasParaTestear, capitalInicial, cantidadDeTradesPorCuenta,
+                probabilidadAciertosTP1, probabilidadAciertosTP2, TP1, TP2, SL, comisiones);
     }
 
 
     /* =========FUNCIONES============== */
     public static void testearRentabilidadDeCuentas(int cantidadDeCuentasParaTestear,
                                                     double capitalInicial, int cantidadDeTradesPorCuenta,
-                                                    double probabilidadAciertosTP1, double probabilidadAciertosTP2,
-                                                    double TP1, double TP2, double SL, double comisiones, double stopGestionDeRiesgo) {
+                                                    double probabilidadAciertosTP1, double probabilidadAciertosTP2, double TP1,
+                                                    double TP2, double SL, double comisiones) {
         double promedioEfectividadEstrategia = 0.0;
         double acumDineroFinal = 0.0;
 
         boolean detenerEjecucion = false; //por sl gestion de riesgo, osea cueta quemada
-        int cantCuentasQuedamas = 0; // cantidad de cuentas quemadas
+        int cantCuentas20Alcanzadas = 0; // cantidad de cuentas quemadas
+        int cantCuentas30Alcanzadas = 0; // cantidad de cuentas quemadas
+        int cantCuentas40Alcanzadas = 0; // cantidad de cuentas quemadas
+        int cantCuentas50Alcanzadas = 0; // cantidad de cuentas quemadas
 
 
         for (int i = 1; i <= cantidadDeCuentasParaTestear; i++) { //Recorre Cuentas
             double capitalActual = capitalInicial;
-            double porcentajeSLgestion = ((stopGestionDeRiesgo * capitalInicial) / 100); //calculo SL por Gestion
-            porcentajeSLgestion = capitalInicial - porcentajeSLgestion;
-            boolean cuentaQuemada = false;// variable local que se resetea y contamos las cuentas quemadas
+
+
+            double veintePorciento = ((20.0 * capitalInicial) / 100); //calculo SL por Gestion
+            veintePorciento = capitalInicial - veintePorciento;
+
+            double treintaPorciento = ((30.0 * capitalInicial) / 100); //calculo SL por Gestion
+            treintaPorciento = capitalInicial - treintaPorciento;
+
+            double cuarentaPorciento = ((40.0 * capitalInicial) / 100); //calculo SL por Gestion
+            cuarentaPorciento = capitalInicial - cuarentaPorciento;
+
+            double cincuentaPorciento = ((50.0 * capitalInicial) / 100); //calculo SL por Gestion
+            cincuentaPorciento = capitalInicial - cincuentaPorciento;
+
+            boolean drawdownAlcanzado20 = false;// variable local que se resetea y contamos las cuentas quemadas
+            boolean drawdownAlcanzado30 = false;
+            boolean drawdownAlcanzado40 = false;
+            boolean drawdownAlcanzado50 = false;
 
             for (int j = 0; j < cantidadDeTradesPorCuenta; j++) { //Recorre Trades por cuenta
                 int resultadoTrade = tradeRealizado(probabilidadAciertosTP1, probabilidadAciertosTP2);
@@ -76,16 +93,57 @@ public class RentabilityCalculator2TPs {
                         break;
                 }
 
-                //preguntar si el capital actual esta por debajo del stopGestionDeRiesgo
-                if(capitalActual <= porcentajeSLgestion){
+                //preguntar si el capital actual esta por debajo del drawdown
+                if(capitalActual <= veintePorciento){
                     detenerEjecucion = true;
-                    cuentaQuemada = true;
+                    drawdownAlcanzado20 = true;
+                    System.out.println("Drawdown alcanzado del 20% en el trade: "+ j+" de la cuenta: "+ i);
+                    System.out.printf("\tcapital actual: %.2f\n",capitalActual);
+                    if(capitalActual <= treintaPorciento){
+                        drawdownAlcanzado20 = false;
+                    }
+                }
+                if (capitalActual <= treintaPorciento){
+                    detenerEjecucion = true;
+                    drawdownAlcanzado30 = true;
+                    System.out.println("Drawdown alcanzado del 30% en el trade: "+ j+" de la cuenta: "+ i);
+                    System.out.printf("\tcapital actual: %.2f\n",capitalActual);
+                    if(capitalActual <= cuarentaPorciento){
+                        drawdownAlcanzado30 = false;
+                    }
+                }
+                if (capitalActual <= cuarentaPorciento){
+                    detenerEjecucion = true;
+                    drawdownAlcanzado40 = true;
+                    System.out.println("Drawdown alcanzado del 40% en el trade: "+ j+" de la cuenta: "+ i);
+                    System.out.printf("\tcapital actual: %.2f\n",capitalActual);
+                    if(capitalActual <= cincuentaPorciento){
+                        drawdownAlcanzado40 = false;
+                    }
+                }
+                if (capitalActual <= cincuentaPorciento){
+                    detenerEjecucion = true;
+                    drawdownAlcanzado50 = true;
+                    System.out.println("Drawdown alcanzado del 50% en el trade: "+ j+" de la cuenta: "+ i);
+                    System.out.printf("\tcapital actual: %.2f\n",capitalActual);
                 }
             }
 
             //condicional para contar cuentas quemadas
-            if(cuentaQuemada){
-                cantCuentasQuedamas = cantCuentasQuedamas + 1;
+            if(drawdownAlcanzado20){
+                cantCuentas20Alcanzadas = cantCuentas20Alcanzadas + 1;
+            }
+
+            if(drawdownAlcanzado30){
+                cantCuentas30Alcanzadas = cantCuentas30Alcanzadas + 1;
+            }
+
+            if(drawdownAlcanzado40){
+                cantCuentas40Alcanzadas = cantCuentas40Alcanzadas + 1;
+            }
+
+            if(drawdownAlcanzado50){
+                cantCuentas50Alcanzadas = cantCuentas50Alcanzadas + 1;
             }
 
             if(capitalActual >= capitalInicial){
@@ -102,7 +160,8 @@ public class RentabilityCalculator2TPs {
         promedioEfectividadEstrategia = acumDineroFinal / cantidadDeCuentasParaTestear;
         System.out.printf("\t Promedio: $ %.2f\n",promedioEfectividadEstrategia);
         //Funcion con resultados finales de la strategia
-        resultadoFinal(promedioEfectividadEstrategia, capitalInicial, cantidadDeTradesPorCuenta, detenerEjecucion, cantCuentasQuedamas, cantidadDeCuentasParaTestear);
+        resultadoFinal(promedioEfectividadEstrategia, capitalInicial, cantidadDeTradesPorCuenta,
+                detenerEjecucion, cantCuentas20Alcanzadas,cantCuentas30Alcanzadas,cantCuentas40Alcanzadas,cantCuentas50Alcanzadas, cantidadDeCuentasParaTestear);
     }
 
     //funcion para correr bucle con pruebas de acierto
@@ -125,8 +184,9 @@ public class RentabilityCalculator2TPs {
         return tradeAcertado;
     }
 
-    public static void resultadoFinal(double promedioEfectividadEstrategia, double capitalInicial,
-                                      int cantTrades,boolean detenerEjecucion, int cantCuentasQuedamas, int cantidadDeCuentasParaTestear) {
+    public static void resultadoFinal(double promedioEfectividadEstrategia, double capitalInicial, int cantTrades,
+                                      boolean detenerEjecucion, int cantCuentas20Alcanzadas, int cantCuentas30Alcanzadas,
+                                      int cantCuentas40Alcanzadas, int cantCuentas50Alcanzadas, int cantidadDeCuentasParaTestear) {
 
         //Variables para obtener el porcentaje de rentabilidad
         double sobrante = promedioEfectividadEstrategia - capitalInicial;
@@ -158,10 +218,13 @@ public class RentabilityCalculator2TPs {
             System.out.println("\t✅✅✅✅✅✅✅✅✅✅✅✅✅✅✅✅\n");
         }
 
-        System.out.println("⚡ Cantidad de Cuentas Quemadas -> " + cantCuentasQuedamas);
+        System.out.println("⚡ Cantidad de Cuentas Que alcanzaron el 20% de drawdown -> " + cantCuentas20Alcanzadas);
+        System.out.println("⚡ Cantidad de Cuentas Que alcanzaron el 30% de drawdown -> " + cantCuentas30Alcanzadas);
+        System.out.println("⚡ Cantidad de Cuentas Que alcanzaron el 40% de drawdown -> " + cantCuentas40Alcanzadas);
+        System.out.println("⚡ Cantidad de Cuentas Que alcanzaron mas del 50% de drawdown -> " + cantCuentas50Alcanzadas);
         double diff = 0.0; // sobrante
         double probabilidadDeEstrategia = 0.0;
-        diff = cantidadDeCuentasParaTestear - cantCuentasQuedamas;// obtener sobrante
+        diff = cantidadDeCuentasParaTestear - (cantCuentas20Alcanzadas +cantCuentas30Alcanzadas+cantCuentas40Alcanzadas+cantCuentas50Alcanzadas);// obtener sobrante
         probabilidadDeEstrategia = (((diff / cantidadDeCuentasParaTestear) * 100));
 
         System.out.println(" Probabilidad de Estrategia : %"+ probabilidadDeEstrategia);
