@@ -33,13 +33,13 @@ public class GUIversion extends Application {
         // Configuración inicial
         int tamanioLineas = 100;
         double capitalInicial = 500;
-        int cantidadDeCuentas = 10; // Usaremos menos cuentas para mejorar la visibilidad
-        int cantidadDeTrades = 500;
+        int cantidadDeCuentas = 1000; // Usaremos menos cuentas para mejorar la visibilidad
+        int cantidadDeTrades = 10000;
         double TP1 = 0.3709;  // TP1 CON 0.50% DE RIESGO ES: 0.18545. para el 1% es 0.3709.
         double TP2 = 2.132;  // TP2 CON 0.50% DE RIESGO ES: 1.0751, TP2 CON 1.00% DE RIESGO ES: 2.132
         double SL = 1;       // Porcentaje de stop loss 0.50% DE RIESGO ES: 0.50, SL CON 1.00% DE RIESGO ES: 1
-        double probTP1 = 23.222; // mi acierto: probabilidadAciertosTP1 = 23.222;
-        double probTP2 = 27.778; // mi acierto: probabilidadAciertosTP2 = 27.778;
+        double probTP1 = 18.1818; // mi acierto: probabilidadAciertosTP1 = 23.222;
+        double probTP2 = 29.8182; // mi acierto: probabilidadAciertosTP2 = 27.778;
 
         int cuentasRentables = 0;  // Contador de cuentas rentables
         double totalCapitalFinal = 0;  // Para medir el rendimiento total

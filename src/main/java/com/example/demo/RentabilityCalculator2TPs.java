@@ -7,22 +7,22 @@ public class RentabilityCalculator2TPs {
 
         /* ⬇️CONFIGURAR⬇️ */
         // config estrategia
-        double capitalInicial = 10000;
+        double capitalInicial = 11500;
         final double TP1 = 0.18545; // TP1 CON 0.50% DE RIESGO ES: 0.18545. para el 1% es 0.3709.
         final double TP2 = 1.0751; // TP2 CON 0.50% DE RIESGO ES: 1.0751, TP2 CON 1.00% DE RIESGO ES: 2.132
         final double SL = 0.50; // Porcentaje de stop loss 0.50% DE RIESGO ES: 0.50, SL CON 1.00% DE RIESGO ES: 1
-        final double probabilidadAciertosTP1 = 18.1818; // mi acierto: probabilidadAciertosTP1 = 23.222;
-        final double probabilidadAciertosTP2 = 29.8182;    // mi acierto: probabilidadAciertosTP2 = 27.778;
+        final double probabilidadAciertosTP1 = 29.0323; // mi acierto: probabilidadAciertosTP1 = 29.0323;
+        final double probabilidadAciertosTP2 = 25.8065;    // mi acierto: probabilidadAciertosTP2 = 25.8065;
         final double comisiones = 0.0;
 
 
         // config pruebas
         int cantidadDeCuentasParaTestear = 10000;
-        int cantidadDeTradesPorCuenta = 10000;      //500  //10000   //2500
+        int cantidadDeTradesPorCuenta = 10000;      //422 mes  //10000   //2500
 
 
-        // mi acierto: probabilidadAciertosTP1 = 23.222;
-        // mi acierto: probabilidadAciertosTP2 = 27.778;
+        // mi acierto: probabilidadAciertosTP1 = 29.0323;
+        // mi acierto: probabilidadAciertosTP2 = 25.8065;
 
 
 
@@ -97,8 +97,8 @@ public class RentabilityCalculator2TPs {
                 if(capitalActual <= veintePorciento){
                     detenerEjecucion = true;
                     drawdownAlcanzado20 = true;
-                    System.out.println("Drawdown alcanzado del 20% en el trade: "+ j+" de la cuenta: "+ i);
-                    System.out.printf("\tcapital actual: %.2f\n",capitalActual);
+                    //System.out.println("Drawdown alcanzado del 20% en el trade: "+ j+" de la cuenta: "+ i);
+                    //System.out.printf("\tcapital actual: %.2f\n",capitalActual);
                     if(capitalActual <= treintaPorciento){
                         drawdownAlcanzado20 = false;
                     }
@@ -106,8 +106,8 @@ public class RentabilityCalculator2TPs {
                 if (capitalActual <= treintaPorciento){
                     detenerEjecucion = true;
                     drawdownAlcanzado30 = true;
-                    System.out.println("Drawdown alcanzado del 30% en el trade: "+ j+" de la cuenta: "+ i);
-                    System.out.printf("\tcapital actual: %.2f\n",capitalActual);
+                    //System.out.println("Drawdown alcanzado del 30% en el trade: "+ j+" de la cuenta: "+ i);
+                    //System.out.printf("\tcapital actual: %.2f\n",capitalActual);
                     if(capitalActual <= cuarentaPorciento){
                         drawdownAlcanzado30 = false;
                     }
@@ -115,8 +115,8 @@ public class RentabilityCalculator2TPs {
                 if (capitalActual <= cuarentaPorciento){
                     detenerEjecucion = true;
                     drawdownAlcanzado40 = true;
-                    System.out.println("Drawdown alcanzado del 40% en el trade: "+ j+" de la cuenta: "+ i);
-                    System.out.printf("\tcapital actual: %.2f\n",capitalActual);
+                    //System.out.println("Drawdown alcanzado del 40% en el trade: "+ j+" de la cuenta: "+ i);
+                    //System.out.printf("\tcapital actual: %.2f\n",capitalActual);
                     if(capitalActual <= cincuentaPorciento){
                         drawdownAlcanzado40 = false;
                     }
@@ -124,8 +124,8 @@ public class RentabilityCalculator2TPs {
                 if (capitalActual <= cincuentaPorciento){
                     detenerEjecucion = true;
                     drawdownAlcanzado50 = true;
-                    System.out.println("Drawdown alcanzado del 50% en el trade: "+ j+" de la cuenta: "+ i);
-                    System.out.printf("\tcapital actual: %.2f\n",capitalActual);
+                    //System.out.println("Drawdown alcanzado del 50% en el trade: "+ j+" de la cuenta: "+ i);
+                    //System.out.printf("\tcapital actual: %.2f\n",capitalActual);
                 }
             }
 

@@ -6,6 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="f5c578e7-eca9-4de6-b476-7111dfbe2195" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo/GUIversion.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo/GUIversion.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo/RentabilityCalculator2TPs.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo/RentabilityCalculator2TPs.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -150,7 +151,12 @@
       <workItem from="1735061144080" duration="641000" />
       <workItem from="1735245294824" duration="373000" />
       <workItem from="1735822898571" duration="390000" />
-      <workItem from="1737034475327" duration="3738000" />
+      <workItem from="1737034475327" duration="3810000" />
+      <workItem from="1739994486442" duration="3215000" />
+      <workItem from="1743139864351" duration="472000" />
+      <workItem from="1743140349395" duration="919000" />
+      <workItem from="1743203658646" duration="3792000" />
+      <workItem from="1743208312135" duration="18000" />
     </task>
     <servers />
   </component>
