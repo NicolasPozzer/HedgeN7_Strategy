@@ -15,6 +15,15 @@ public class RentabilityCalculator2TPs {
         final double probabilidadAciertosTP2 = 25.8065;    // mi acierto: probabilidadAciertosTP2 = 25.8065;
         final double comisiones = 0.0;
 
+        /* MINIMO ACIERTO (ponele aprox)
+        final double probabilidadAciertosTP1 = 25.`0323; // mi acierto: probabilidadAciertosTP1 = 29.0323;
+        final double probabilidadAciertosTP2 = 22.5;
+        * */
+
+        /* REGULAR ACIERTO (ponele aprox)
+        final double probabilidadAciertosTP1 = 24.0323; // mi acierto: probabilidadAciertosTP1 = 29.0323;
+        final double probabilidadAciertosTP2 = 23.5;
+        * */
 
         // config pruebas
         int cantidadDeCuentasParaTestear = 10000;
@@ -45,6 +54,8 @@ public class RentabilityCalculator2TPs {
         double acumDineroFinal = 0.0;
 
         boolean detenerEjecucion = false; //por sl gestion de riesgo, osea cueta quemada
+        int cantCuentas8Alcanzadas = 0;
+        int cantCuentas10Alcanzadas = 0;
         int cantCuentas20Alcanzadas = 0; // cantidad de cuentas quemadas
         int cantCuentas30Alcanzadas = 0; // cantidad de cuentas quemadas
         int cantCuentas40Alcanzadas = 0; // cantidad de cuentas quemadas
@@ -54,6 +65,11 @@ public class RentabilityCalculator2TPs {
         for (int i = 1; i <= cantidadDeCuentasParaTestear; i++) { //Recorre Cuentas
             double capitalActual = capitalInicial;
 
+            double ochoPorciento = ((8.0 * capitalInicial) / 100); //calculo SL por Gestion
+            ochoPorciento = capitalInicial - ochoPorciento;
+
+            double diezPorciento = ((10.0 * capitalInicial) / 100); //calculo SL por Gestion
+            diezPorciento = capitalInicial - diezPorciento;
 
             double veintePorciento = ((20.0 * capitalInicial) / 100); //calculo SL por Gestion
             veintePorciento = capitalInicial - veintePorciento;
@@ -67,6 +83,8 @@ public class RentabilityCalculator2TPs {
             double cincuentaPorciento = ((50.0 * capitalInicial) / 100); //calculo SL por Gestion
             cincuentaPorciento = capitalInicial - cincuentaPorciento;
 
+            boolean drawdownAlcanzado8 = false;
+            boolean drawdownAlcanzado10 = false;
             boolean drawdownAlcanzado20 = false;// variable local que se resetea y contamos las cuentas quemadas
             boolean drawdownAlcanzado30 = false;
             boolean drawdownAlcanzado40 = false;
@@ -91,6 +109,28 @@ public class RentabilityCalculator2TPs {
                         //incrementar capital con stop
                         capitalActual = capitalActual - ((SL * capitalActual) / 100);
                         break;
+                }
+
+                //preguntar si el capital actual esta por debajo del drawdown
+                if(capitalActual <= ochoPorciento){
+                    detenerEjecucion = true;
+                    drawdownAlcanzado8 = true;
+                    //System.out.println("Drawdown alcanzado del 20% en el trade: "+ j+" de la cuenta: "+ i);
+                    //System.out.printf("\tcapital actual: %.2f\n",capitalActual);
+                    if(capitalActual <= ochoPorciento){
+                        drawdownAlcanzado8 = false;
+                    }
+                }
+
+                //preguntar si el capital actual esta por debajo del drawdown
+                if(capitalActual <= diezPorciento){
+                    detenerEjecucion = true;
+                    drawdownAlcanzado10 = true;
+                    //System.out.println("Drawdown alcanzado del 20% en el trade: "+ j+" de la cuenta: "+ i);
+                    //System.out.printf("\tcapital actual: %.2f\n",capitalActual);
+                    if(capitalActual <= veintePorciento){
+                        drawdownAlcanzado10 = false;
+                    }
                 }
 
                 //preguntar si el capital actual esta por debajo del drawdown
@@ -130,6 +170,14 @@ public class RentabilityCalculator2TPs {
             }
 
             //condicional para contar cuentas quemadas
+            if(drawdownAlcanzado8){
+                cantCuentas8Alcanzadas = cantCuentas8Alcanzadas + 1;
+            }
+
+            if(drawdownAlcanzado10){
+                cantCuentas10Alcanzadas = cantCuentas10Alcanzadas + 1;
+            }
+
             if(drawdownAlcanzado20){
                 cantCuentas20Alcanzadas = cantCuentas20Alcanzadas + 1;
             }
@@ -161,7 +209,7 @@ public class RentabilityCalculator2TPs {
         System.out.printf("\t Promedio: $ %.2f\n",promedioEfectividadEstrategia);
         //Funcion con resultados finales de la strategia
         resultadoFinal(promedioEfectividadEstrategia, capitalInicial, cantidadDeTradesPorCuenta,
-                detenerEjecucion, cantCuentas20Alcanzadas,cantCuentas30Alcanzadas,cantCuentas40Alcanzadas,cantCuentas50Alcanzadas, cantidadDeCuentasParaTestear);
+                detenerEjecucion, cantCuentas8Alcanzadas, cantCuentas10Alcanzadas, cantCuentas20Alcanzadas,cantCuentas30Alcanzadas,cantCuentas40Alcanzadas,cantCuentas50Alcanzadas, cantidadDeCuentasParaTestear);
     }
 
     //funcion para correr bucle con pruebas de acierto
@@ -185,7 +233,7 @@ public class RentabilityCalculator2TPs {
     }
 
     public static void resultadoFinal(double promedioEfectividadEstrategia, double capitalInicial, int cantTrades,
-                                      boolean detenerEjecucion, int cantCuentas20Alcanzadas, int cantCuentas30Alcanzadas,
+                                      boolean detenerEjecucion, int cantCuentas8Alcanzadas, int cantCuentas10Alcanzadas, int cantCuentas20Alcanzadas, int cantCuentas30Alcanzadas,
                                       int cantCuentas40Alcanzadas, int cantCuentas50Alcanzadas, int cantidadDeCuentasParaTestear) {
 
         //Variables para obtener el porcentaje de rentabilidad
@@ -218,6 +266,8 @@ public class RentabilityCalculator2TPs {
             System.out.println("\t✅✅✅✅✅✅✅✅✅✅✅✅✅✅✅✅\n");
         }
 
+        System.out.println("⚡ Cantidad de Cuentas Que alcanzaron el 8% de drawdown -> " + cantCuentas8Alcanzadas);
+        System.out.println("⚡ Cantidad de Cuentas Que alcanzaron el 10% de drawdown -> " + cantCuentas10Alcanzadas);
         System.out.println("⚡ Cantidad de Cuentas Que alcanzaron el 20% de drawdown -> " + cantCuentas20Alcanzadas);
         System.out.println("⚡ Cantidad de Cuentas Que alcanzaron el 30% de drawdown -> " + cantCuentas30Alcanzadas);
         System.out.println("⚡ Cantidad de Cuentas Que alcanzaron el 40% de drawdown -> " + cantCuentas40Alcanzadas);
