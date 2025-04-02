@@ -25,9 +25,10 @@ public class RentabilityCalculator2TPs {
         final double probabilidadAciertosTP2 = 23.5;
         * */
 
-        /* ACIERTO PERFECTO NICO
+        /* ACIERTO PERFECTO NICO(uno de mis aciertos alcanzados en racha alta)
         final double probabilidadAciertosTP1 = 27.0270; // mi acierto: probabilidadAciertosTP1 = 29.0323;
         final double probabilidadAciertosTP2 = 29.7297;
+        acierto total -> %56.75
         * */
 
 
