@@ -26,7 +26,7 @@ public class RentabilityCalculator2TPs {
         * */
 
         /* ACIERTO PERFECTO NICO(uno de mis aciertos alcanzados en racha alta)
-        final double probabilidadAciertosTP1 = 27.0270; // mi acierto: probabilidadAciertosTP1 = 29.0323;
+        final double probabilidadAciertosTP1 = 27.0270;
         final double probabilidadAciertosTP2 = 29.7297;
         acierto total -> %56.75
         * */
@@ -124,7 +124,7 @@ public class RentabilityCalculator2TPs {
                     drawdownAlcanzado8 = true;
                     //System.out.println("Drawdown alcanzado del 20% en el trade: "+ j+" de la cuenta: "+ i);
                     //System.out.printf("\tcapital actual: %.2f\n",capitalActual);
-                    if(capitalActual <= ochoPorciento){
+                    if(capitalActual <= diezPorciento){
                         drawdownAlcanzado8 = false;
                     }
                 }
