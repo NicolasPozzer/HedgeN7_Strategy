@@ -7,12 +7,12 @@ public class RentabilityCalculator2TPs {
 
         /* ⬇️CONFIGURAR⬇️ */
         // config estrategia
-        double capitalInicial = 11500;
+        double capitalInicial = 1020;
         final double TP1 = 0.18545; // TP1 CON 0.50% DE RIESGO ES: 0.18545. para el 1% es 0.3709.
         final double TP2 = 1.0751; // TP2 CON 0.50% DE RIESGO ES: 1.0751, TP2 CON 1.00% DE RIESGO ES: 2.132
         final double SL = 0.50; // Porcentaje de stop loss 0.50% DE RIESGO ES: 0.50, SL CON 1.00% DE RIESGO ES: 1
-        final double probabilidadAciertosTP1 = 29.0323; // mi acierto: probabilidadAciertosTP1 = 29.0323;
-        final double probabilidadAciertosTP2 = 25.8065;    // mi acierto: probabilidadAciertosTP2 = 25.8065;
+        final double probabilidadAciertosTP1 = 27.0270; // mi acierto: probabilidadAciertosTP1 = 29.0323;
+        final double probabilidadAciertosTP2 = 29.7297;    // mi acierto: probabilidadAciertosTP2 = 25.8065;
         final double comisiones = 0.0;
 
         /* MINIMO ACIERTO (ponele aprox)
@@ -24,6 +24,12 @@ public class RentabilityCalculator2TPs {
         final double probabilidadAciertosTP1 = 24.0323; // mi acierto: probabilidadAciertosTP1 = 29.0323;
         final double probabilidadAciertosTP2 = 23.5;
         * */
+
+        /* ACIERTO PERFECTO NICO
+        final double probabilidadAciertosTP1 = 27.0270; // mi acierto: probabilidadAciertosTP1 = 29.0323;
+        final double probabilidadAciertosTP2 = 29.7297;
+        * */
+
 
         // config pruebas
         int cantidadDeCuentasParaTestear = 10000;
