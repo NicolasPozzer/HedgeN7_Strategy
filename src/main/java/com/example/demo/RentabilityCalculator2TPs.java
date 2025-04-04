@@ -7,13 +7,19 @@ public class RentabilityCalculator2TPs {
 
         /* ⬇️CONFIGURAR⬇️ */
         // config estrategia
-        double capitalInicial = 1020;
+        double capitalInicial = 1000;
         final double TP1 = 0.18545; // TP1 CON 0.50% DE RIESGO ES: 0.18545. para el 1% es 0.3709.
         final double TP2 = 1.0751; // TP2 CON 0.50% DE RIESGO ES: 1.0751, TP2 CON 1.00% DE RIESGO ES: 2.132
         final double SL = 0.50; // Porcentaje de stop loss 0.50% DE RIESGO ES: 0.50, SL CON 1.00% DE RIESGO ES: 1
-        final double probabilidadAciertosTP1 = 27.0270; // mi acierto: probabilidadAciertosTP1 = 29.0323;
-        final double probabilidadAciertosTP2 = 29.7297;    // mi acierto: probabilidadAciertosTP2 = 25.8065;
+        final double probabilidadAciertosTP1 = 29.2683; // mi acierto: probabilidadAciertosTP1 = 29.0323;
+        final double probabilidadAciertosTP2 = 26.8293;    // mi acierto: probabilidadAciertosTP2 = 25.8065;
         final double comisiones = 0.0;
+
+
+        /* (ACIERTO ACTUALL1!!)
+        final double probabilidadAciertosTP1 = 29.2683; // mi acierto: probabilidadAciertosTP1 = 29.0323;
+        final double probabilidadAciertosTP2 = 26.8293;    // mi acierto: probabilidadAciertosTP2 = 25.8065;\
+        * */
 
         /* MINIMO ACIERTO (ponele aprox)
         final double probabilidadAciertosTP1 = 25.`0323; // mi acierto: probabilidadAciertosTP1 = 29.0323;
@@ -34,7 +40,7 @@ public class RentabilityCalculator2TPs {
 
         // config pruebas
         int cantidadDeCuentasParaTestear = 10000;
-        int cantidadDeTradesPorCuenta = 10000;      //422 mes  //10000   //2500
+        int cantidadDeTradesPorCuenta = 1000;      //422 mes  //10000   //2500
 
 
         // mi acierto: probabilidadAciertosTP1 = 29.0323;
@@ -68,6 +74,7 @@ public class RentabilityCalculator2TPs {
         int cantCuentas40Alcanzadas = 0; // cantidad de cuentas quemadas
         int cantCuentas50Alcanzadas = 0; // cantidad de cuentas quemadas
 
+        int cantidadTradesParaSuperarDrawDown = 0;
 
         for (int i = 1; i <= cantidadDeCuentasParaTestear; i++) { //Recorre Cuentas
             double capitalActual = capitalInicial;
@@ -113,16 +120,29 @@ public class RentabilityCalculator2TPs {
                         capitalActual = capitalActual + ((TP2 * capitalActual) / 100);
                         break;
                     case 3:
-                        //incrementar capital con stop
+                        //decrementar capital con stop
                         capitalActual = capitalActual - ((SL * capitalActual) / 100);
                         break;
                 }
 
+                //CALCULAR CUANTOS TRADES NECESITO COMO MINO PARA SALIR DE DRAWDOWN
+                if(capitalActual <= capitalInicial){
+
+                    if(j > cantidadTradesParaSuperarDrawDown){
+                        cantidadTradesParaSuperarDrawDown = j;
+                    }
+                }
+
                 //preguntar si el capital actual esta por debajo del drawdown
                 if(capitalActual <= ochoPorciento){
+
+                    if(j > cantidadTradesParaSuperarDrawDown){
+                        cantidadTradesParaSuperarDrawDown = j;
+                    }
+
                     detenerEjecucion = true;
                     drawdownAlcanzado8 = true;
-                    //System.out.println("Drawdown alcanzado del 20% en el trade: "+ j+" de la cuenta: "+ i);
+                    //System.out.println("Drawdown alcanzado del 8% en el trade: "+ j+" de la cuenta: "+ i);
                     //System.out.printf("\tcapital actual: %.2f\n",capitalActual);
                     if(capitalActual <= diezPorciento){
                         drawdownAlcanzado8 = false;
@@ -205,8 +225,8 @@ public class RentabilityCalculator2TPs {
                 //System.out.printf("\t✅Capital: $ %.2f",capitalActual);
                 //System.out.println("  Cuenta Nro. "+ i);
             }else{
-                //System.out.printf("\t❌Capital: $ %.2f",capitalActual);
-                //System.out.println("  Cuenta Nro. "+ i);
+                System.out.printf("\t❌Capital: $ %.2f",capitalActual);
+                System.out.println("  Cuenta Nro. "+ i);
             }
             acumDineroFinal = acumDineroFinal + capitalActual;
         }
@@ -214,6 +234,9 @@ public class RentabilityCalculator2TPs {
 
         promedioEfectividadEstrategia = acumDineroFinal / cantidadDeCuentasParaTestear;
         System.out.printf("\t Promedio: $ %.2f\n",promedioEfectividadEstrategia);
+
+        System.out.println("\nDespues de esta cantidad de trades en la cuenta deberia terminar el Drawdown: "+ cantidadTradesParaSuperarDrawDown);
+
         //Funcion con resultados finales de la strategia
         resultadoFinal(promedioEfectividadEstrategia, capitalInicial, cantidadDeTradesPorCuenta,
                 detenerEjecucion, cantCuentas8Alcanzadas, cantCuentas10Alcanzadas, cantCuentas20Alcanzadas,cantCuentas30Alcanzadas,cantCuentas40Alcanzadas,cantCuentas50Alcanzadas, cantidadDeCuentasParaTestear);
