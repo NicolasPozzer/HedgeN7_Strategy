@@ -11,24 +11,14 @@ public class RentabilityCalculator2TPs {
         final double TP1 = 0.18545; // TP1 CON 0.50% DE RIESGO ES: 0.18545. para el 1% es 0.3709.
         final double TP2 = 1.0751; // TP2 CON 0.50% DE RIESGO ES: 1.0751, TP2 CON 1.00% DE RIESGO ES: 2.132
         final double SL = 0.50; // Porcentaje de stop loss 0.50% DE RIESGO ES: 0.50, SL CON 1.00% DE RIESGO ES: 1
-        final double probabilidadAciertosTP1 = 29.2683; // mi acierto: probabilidadAciertosTP1 = 29.0323;
-        final double probabilidadAciertosTP2 = 26.8293;    // mi acierto: probabilidadAciertosTP2 = 25.8065;
+        final double probabilidadAciertosTP1 = 27.1186;
+        final double probabilidadAciertosTP2 = 27.1186;
         final double comisiones = 0.0;
 
 
-        /* (ACIERTO ACTUALL1!!)
-        final double probabilidadAciertosTP1 = 29.2683; // mi acierto: probabilidadAciertosTP1 = 29.0323;
-        final double probabilidadAciertosTP2 = 26.8293;    // mi acierto: probabilidadAciertosTP2 = 25.8065;\
-        * */
-
-        /* MINIMO ACIERTO (ponele aprox)
-        final double probabilidadAciertosTP1 = 25.`0323; // mi acierto: probabilidadAciertosTP1 = 29.0323;
-        final double probabilidadAciertosTP2 = 22.5;
-        * */
-
-        /* REGULAR ACIERTO (ponele aprox)
-        final double probabilidadAciertosTP1 = 24.0323; // mi acierto: probabilidadAciertosTP1 = 29.0323;
-        final double probabilidadAciertosTP2 = 23.5;
+        /* (ACIERTO MINIMO NICO ALCANZADO!!)
+        final double probabilidadAciertosTP1 = 29.0909;
+        final double probabilidadAciertosTP2 = 23.6364;
         * */
 
         /* ACIERTO PERFECTO NICO(uno de mis aciertos alcanzados en racha alta)
@@ -40,7 +30,7 @@ public class RentabilityCalculator2TPs {
 
         // config pruebas
         int cantidadDeCuentasParaTestear = 10000;
-        int cantidadDeTradesPorCuenta = 1000;      //422 mes  //10000   //2500
+        int cantidadDeTradesPorCuenta = 10000;      //422 mes  //10000   //2500
 
 
         // mi acierto: probabilidadAciertosTP1 = 29.0323;
@@ -225,8 +215,8 @@ public class RentabilityCalculator2TPs {
                 //System.out.printf("\t✅Capital: $ %.2f",capitalActual);
                 //System.out.println("  Cuenta Nro. "+ i);
             }else{
-                System.out.printf("\t❌Capital: $ %.2f",capitalActual);
-                System.out.println("  Cuenta Nro. "+ i);
+                //System.out.printf("\t❌Capital: $ %.2f",capitalActual);
+                //System.out.println("  Cuenta Nro. "+ i);
             }
             acumDineroFinal = acumDineroFinal + capitalActual;
         }
