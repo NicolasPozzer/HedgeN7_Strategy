@@ -1,56 +1,52 @@
-# Parámetros iniciales
-probabilidad_tp1 = 23.55 / 100  # Probabilidad de alcanzar TP1 (23.55%)
-probabilidad_tp2 = 23.55 / 100  # Probabilidad de alcanzar TP2 (23.55%)
-probabilidad_total_ganar = probabilidad_tp1 + probabilidad_tp2  # Probabilidad total de ganar
-probabilidad_perder = 1 - probabilidad_total_ganar  # Probabilidad de perder (restante)
+import matplotlib.pyplot as plt
+import numpy as np
 
-# Valores de TP1 y TP2
-tp1_ratio = 1.14  # Ganancia de TP1 en R
-tp1_peso = 0.38  # Peso de TP1 en el total
-tp2_ratio = 2.20  # Ganancia de TP2 en R
-tp2_peso = 0.62  # Peso de TP2 en el total
+# Parámetros del sistema
+capital_inicial = 1000
+riesgo_por_trade = 0.0033  # 0.5% -> 0.005
+ganancia_tp1 = 0.3709
+ganancia_total = 2.132  # TP1 + TP2
+perdida_total = -1
 
-# Cálculo de ganancias por TP1 y TP2
-ganancia_tp1 = tp1_ratio * tp1_peso
-ganancia_tp2 = tp2_ratio * tp2_peso
+# Variables del simulador
+num_trades = 40000
+# Tasas de acierto: probabilidad de tocar solo TP1, y de tocar TP1+TP2
+tp1_rate = 0.257576
+tp2_rate = 0.257576
+loss_rate = 1 - (tp1_rate + tp2_rate)
 
-# Ganancia promedio ponderada (G)
-ganancia_promedio = ganancia_tp1 + ganancia_tp2
+# Generar resultados aleatorios de operaciones
+np.random.seed(42)
+resultados = np.random.choice(
+    ['tp1', 'tp2', 'loss'],
+    size=num_trades,
+    p=[tp1_rate, tp2_rate, loss_rate]
+)
 
-# Expectativa matemática (E)
-expectativa = (probabilidad_total_ganar * ganancia_promedio) - (probabilidad_perder * 1)  # Pérdida promedio es 1R
+capital = [capital_inicial]
 
-# Mostrar resultados
-print(f"Ganancia por TP1: {ganancia_tp1:.4f}R")
-print(f"Ganancia por TP2: {ganancia_tp2:.4f}R")
-print(f"Ganancia promedio ponderada (G): {ganancia_promedio:.4f}R")
-print(f"Probabilidad total de ganar: {probabilidad_total_ganar * 100:.2f}%")
-print(f"Probabilidad de perder: {probabilidad_perder * 100:.2f}%")
-print(f"Expectativa matemática (E): {expectativa:.4f}")
+# Simulación
+for r in resultados:
+    capital_actual = capital[-1]
+    riesgo_usd = capital_actual * riesgo_por_trade
 
-# Validación de rentabilidad
-if expectativa > 0:
-    print("\n✅ El sistema es rentable a largo plazo.")
-else:
-    print("\n❌ El sistema NO es rentable a largo plazo.")
+    if r == 'tp1':
+        ganancia = riesgo_usd * ganancia_tp1
+    elif r == 'tp2':
+        ganancia = riesgo_usd * ganancia_total
+    else:
+        ganancia = riesgo_usd * perdida_total
 
+    capital.append(capital_actual + ganancia)
 
-"""
-# Cálculo de balances mensuales con interés compuesto
-capital_inicial = 500  # USD
-meses = 24  # Período en meses
-ganancia_mensual_porcentual = ganancia_promedio * probabilidad_total_ganar * 100  # Porcentaje mensual
-balances = [capital_inicial]
-
-for mes in range(1, meses + 1):
-    nuevo_balance = balances[-1] * (1 + ganancia_mensual_porcentual / 100)
-    balances.append(nuevo_balance)
-
-# Mostrar resumen mensual
-print("\nResumen de los 24 meses:")
-print("Mes\tBalance (USD)\tGanancia (%)")
-for mes, balance in enumerate(balances[1:], start=1):
-    ganancia_mensual = (balance / balances[mes - 1] - 1) * 100
-    print(f"{mes}\t{balance:.2f}\t{ganancia_mensual:.2f}")
-    
-"""
+# Gráfico
+plt.figure(figsize=(12, 6))
+plt.plot(capital, label='Evolución del capital')
+plt.axhline(y=capital_inicial, color='gray', linestyle='--', label='Capital inicial')
+plt.title('Simulación de sistema con Fixed Fractional Risk')
+plt.xlabel('Número de operaciones')
+plt.ylabel('Capital ($)')
+plt.legend()
+plt.grid(True)
+plt.tight_layout()
+plt.show()

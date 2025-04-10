@@ -30,7 +30,7 @@ public class RentabilityCalculator2TPs {
 
         // config pruebas
         int cantidadDeCuentasParaTestear = 10000;
-        int cantidadDeTradesPorCuenta = 10000;      //422 mes  //10000   //2500
+        int cantidadDeTradesPorCuenta = 44;      //422 mes  //10000   //2500
 
 
         // mi acierto: probabilidadAciertosTP1 = 29.0323;
