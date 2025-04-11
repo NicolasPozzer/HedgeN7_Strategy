@@ -3,34 +3,28 @@ import matplotlib.pyplot as plt
 
 # Parámetros del sistema
 capital_inicial = 1000
-riesgo_por_trade = 0.005
+riesgo_por_trade = 0.005  # 0.50% de riesgo -> 0.005
 ganancia_tp1 = 0.3709
 ganancia_total = 2.10
 perdida_total = -1
-
-# Configuración de simulación
-num_trades = 792
-num_simulaciones = 10000
-
-tp1_rate = 0.25
-tp2_rate = 0.25
+tp1_rate = 0.29
+tp2_rate = 0.23
 loss_rate = 1 - (tp1_rate + tp2_rate)
 
+#Configuraciones de casos de prueba
+num_trades = 66
+num_simulaciones = 40000
+
+# Datos para el análisis
 capital_final = []
 drawdowns = []
-equity_total = np.zeros(num_trades + 1)
-drawdown_curves = []
-
-print("Ejecutando simulaciones...")
+equity_curves = []
 
 for seed in range(num_simulaciones):
     np.random.seed(seed)
     resultados = np.random.choice(['tp1', 'tp2', 'loss'], size=num_trades, p=[tp1_rate, tp2_rate, loss_rate])
-
     capital = capital_inicial
     equity_curve = [capital]
-    peak = capital
-    drawdown_curve = []
 
     for r in resultados:
         riesgo_usd = capital * riesgo_por_trade
@@ -43,19 +37,51 @@ for seed in range(num_simulaciones):
         capital += ganancia
         equity_curve.append(capital)
 
-        if capital > peak:
-            peak = capital
-        drawdown_curve.append((peak - capital) / peak)
+    peak = capital_inicial
+    max_drawdown = 0
+    for equity in equity_curve:
+        if equity > peak:
+            peak = equity
+        drawdown = (peak - equity) / peak
+        max_drawdown = max(max_drawdown, drawdown)
 
+    drawdowns.append(max_drawdown)
     capital_final.append(capital)
-    drawdowns.append(max(drawdown_curve))
-    equity_total += np.array(equity_curve)
-    drawdown_curves.append(drawdown_curve)
+    if seed < 100:  # Guardamos las primeras 100 curvas para visualización
+        equity_curves.append(equity_curve)
 
-# Promedios
-equity_promedio = equity_total / num_simulaciones
-drawdown_matrix = np.array([d + [0]*(num_trades - len(d)) for d in drawdown_curves])
-drawdown_promedio = np.mean(drawdown_matrix, axis=0)
+avg_drawdown_durations = []
+max_drawdown_durations = []
+
+for curve in equity_curves:
+    peak = curve[0]
+    duration = 0
+    durations = []
+    for equity in curve:
+        if equity < peak:
+            duration += 1
+        else:
+            if duration > 0:
+                durations.append(duration)
+            peak = equity
+            duration = 0
+    if duration > 0:
+        durations.append(duration)
+    if durations:
+        avg_drawdown_durations.append(np.mean(durations))  # Promedio de DDs por curva
+        max_drawdown_durations.append(np.max(durations))   # Max duración de DDs por curva
+
+
+
+# Cálculo de estadísticas
+capital_array = np.array(capital_final)
+media_final = np.mean(capital_array)
+mediana_final = np.median(capital_array)
+desviacion_std = np.std(capital_array)
+
+# Probabilidades de drawdowns
+umbral_drawdowns = [0.05, 0.10, 0.15, 0.20, 0.25, 0.30, 0.33, 0.40, 0.50]
+prob_drawdowns = [np.mean(np.array(drawdowns) >= thresh) * 100 for thresh in umbral_drawdowns]
 
 # Estadísticas
 capital_array = np.array(capital_final)
@@ -67,41 +93,45 @@ print(f"% de simulaciones ganadoras: {np.mean(capital_array > capital_inicial)*1
 
 # Probabilidades de drawdowns
 print("\n📉 Probabilidades de alcanzar drawdowns:")
-for umbral in [0.05, 0.10, 0.15, 0.20, 0.25, 0.33, 0.40, 0.50]:
+for umbral in umbral_drawdowns:
     prob = np.mean(np.array(drawdowns) >= umbral) * 100
     print(f"Probabilidad de un drawdown >= {int(umbral*100)}%: {prob:.2f}%")
 
-# Gráfico distribución capital final
-plt.figure(figsize=(12, 6))
-plt.hist(capital_array, bins=50, color='skyblue', edgecolor='black')
-plt.axvline(x=capital_inicial, color='red', linestyle='--', label='Capital inicial')
-plt.title('Distribución de Capital Final')
-plt.xlabel('Capital Final ($)')
-plt.ylabel('Frecuencia')
-plt.legend()
-plt.grid(True)
-plt.tight_layout()
-plt.show()
+print(f"\n⏱️ Promedio de trades para salir de un drawdown: {np.mean(avg_drawdown_durations):.2f}")
+print(f"📉 Drawdown más largo registrado (en trades): {np.max(max_drawdown_durations)}")
 
-# Curva de equity promedio
-plt.figure(figsize=(12, 6))
-plt.plot(equity_promedio, color='green', label='Equity promedio')
-plt.axhline(y=capital_inicial, color='red', linestyle='--', label='Capital inicial')
-plt.title('Curva de Equity Promedio')
-plt.xlabel('Número de Trades')
-plt.ylabel('Capital ($)')
-plt.legend()
-plt.grid(True)
-plt.tight_layout()
-plt.show()
+# Gráficos
+fig, axs = plt.subplots(2, 2, figsize=(16, 10))
 
-# Curva de drawdown promedio
-plt.figure(figsize=(12, 6))
-plt.plot(drawdown_promedio * 100, color='orange', label='Drawdown promedio')
-plt.title('Drawdown Promedio por Trade')
-plt.xlabel('Número de Trades')
-plt.ylabel('Drawdown (%)')
-plt.legend()
-plt.grid(True)
+# Histograma del capital final
+axs[0, 0].hist(capital_array, bins=50, color='skyblue', edgecolor='black')
+axs[0, 0].axvline(x=capital_inicial, color='red', linestyle='--', label='Capital inicial')
+axs[0, 0].set_title('Distribución de Capital Final')
+axs[0, 0].set_xlabel('Capital Final ($)')
+axs[0, 0].set_ylabel('Frecuencia')
+axs[0, 0].legend()
+axs[0, 0].grid(True)
+
+# Curvas de equity seleccionadas
+for curva in equity_curves:
+    axs[0, 1].plot(curva, alpha=0.3)
+axs[0, 1].set_title('Evolución de Equity en Simulaciones')
+axs[0, 1].set_xlabel('Trade')
+axs[0, 1].set_ylabel('Capital ($)')
+axs[0, 1].grid(True)
+
+# Boxplot del capital final
+axs[1, 0].boxplot(capital_array, vert=False)
+axs[1, 0].set_title('Boxplot del Capital Final')
+axs[1, 0].set_xlabel('Capital Final ($)')
+axs[1, 0].grid(True)
+
+# Barras de probabilidades de drawdowns
+axs[1, 1].bar([f'{int(x*100)}%' for x in umbral_drawdowns], prob_drawdowns, color='salmon')
+axs[1, 1].set_title('Probabilidades de Drawdowns')
+axs[1, 1].set_ylabel('Probabilidad (%)')
+axs[1, 1].set_ylim(0, 110)
+axs[1, 1].grid(True)
+
 plt.tight_layout()
 plt.show()
