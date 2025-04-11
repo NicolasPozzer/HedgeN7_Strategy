@@ -4,15 +4,17 @@ import matplotlib.pyplot as plt
 # Parámetros del sistema
 capital_inicial = 1000
 riesgo_por_trade = 0.005  # 0.50% de riesgo -> 0.005
+
+# Ratios y % aciertos
 ganancia_tp1 = 0.3709
 ganancia_total = 2.10
 perdida_total = -1
-tp1_rate = 0.29
-tp2_rate = 0.23
+tp1_rate = 0.28169
+tp2_rate = 0.239437
 loss_rate = 1 - (tp1_rate + tp2_rate)
 
 #Configuraciones de casos de prueba
-num_trades = 66
+num_trades = 71
 num_simulaciones = 40000
 
 # Datos para el análisis
@@ -80,7 +82,7 @@ mediana_final = np.median(capital_array)
 desviacion_std = np.std(capital_array)
 
 # Probabilidades de drawdowns
-umbral_drawdowns = [0.05, 0.10, 0.15, 0.20, 0.25, 0.30, 0.33, 0.40, 0.50]
+umbral_drawdowns = [0.02, 0.03, 0.05, 0.10, 0.15, 0.20, 0.25, 0.30, 0.33, 0.40, 0.50]
 prob_drawdowns = [np.mean(np.array(drawdowns) >= thresh) * 100 for thresh in umbral_drawdowns]
 
 # Estadísticas
@@ -90,6 +92,11 @@ print(f"Promedio final: ${np.mean(capital_array):.2f}")
 print(f"Mediana final: ${np.median(capital_array):.2f}")
 print(f"Desviación estándar: ${np.std(capital_array):.2f}")
 print(f"% de simulaciones ganadoras: {np.mean(capital_array > capital_inicial)*100:.2f}%")
+
+capFinal = np.mean(capital_array)
+sobrante = capFinal - capital_inicial
+porcentajeDeRentabilidad = (sobrante / capital_inicial) * 100
+print(f"El porcentaje Promedio de Rentabilidad es: {porcentajeDeRentabilidad:.2f}%")
 
 # Probabilidades de drawdowns
 print("\n📉 Probabilidades de alcanzar drawdowns:")
