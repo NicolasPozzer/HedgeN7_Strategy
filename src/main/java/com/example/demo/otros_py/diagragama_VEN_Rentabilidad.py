@@ -3,19 +3,22 @@ import matplotlib.pyplot as plt
 
 # Parámetros del sistema
 capital_inicial = 1000
-riesgo_por_trade = 0.005  # 0.50% de riesgo -> 0.005
+riesgo_por_trade = 0.005  # 0.50% de riesgo
 
 # Ratios y % aciertos
 ganancia_tp1 = 0.3709
-ganancia_total = 2.10
+ganancia_total = 2.20
 perdida_total = -1
-tp1_rate = 0.28169
-tp2_rate = 0.239437
+tp1_rate = 0.277778
+tp2_rate = 0.236111
 loss_rate = 1 - (tp1_rate + tp2_rate)
 
-#Configuraciones de casos de prueba
-num_trades = 71
-num_simulaciones = 40000
+# Configuraciones de casos de prueba
+num_trades = 528
+num_simulaciones = 10000
+
+# Comisión por operación (Bybit Futuros Taker)
+comision_rate = 0.01  # 0.16% => 0.0016
 
 # Datos para el análisis
 capital_final = []
@@ -30,15 +33,22 @@ for seed in range(num_simulaciones):
 
     for r in resultados:
         riesgo_usd = capital * riesgo_por_trade
+
+        # Con comisión
         if r == 'tp1':
             ganancia = riesgo_usd * ganancia_tp1
         elif r == 'tp2':
             ganancia = riesgo_usd * ganancia_total
         else:
             ganancia = riesgo_usd * perdida_total
-        capital += ganancia
+
+        # Se aplica comisión por apertura y cierre
+        comision_total = riesgo_usd * comision_rate * 2
+        capital += ganancia - comision_total
+
         equity_curve.append(capital)
 
+    # Cálculo del drawdown
     peak = capital_inicial
     max_drawdown = 0
     for equity in equity_curve:
@@ -49,9 +59,11 @@ for seed in range(num_simulaciones):
 
     drawdowns.append(max_drawdown)
     capital_final.append(capital)
-    if seed < 100:  # Guardamos las primeras 100 curvas para visualización
+
+    if seed < 100:
         equity_curves.append(equity_curve)
 
+# Cálculo de duración de drawdowns
 avg_drawdown_durations = []
 max_drawdown_durations = []
 
@@ -70,38 +82,34 @@ for curve in equity_curves:
     if duration > 0:
         durations.append(duration)
     if durations:
-        avg_drawdown_durations.append(np.mean(durations))  # Promedio de DDs por curva
-        max_drawdown_durations.append(np.max(durations))   # Max duración de DDs por curva
+        avg_drawdown_durations.append(np.mean(durations))
+        max_drawdown_durations.append(np.max(durations))
 
-
-
-# Cálculo de estadísticas
+# Estadísticas con comisión
 capital_array = np.array(capital_final)
 media_final = np.mean(capital_array)
 mediana_final = np.median(capital_array)
 desviacion_std = np.std(capital_array)
 
+
 # Probabilidades de drawdowns
 umbral_drawdowns = [0.02, 0.03, 0.05, 0.10, 0.15, 0.20, 0.25, 0.30, 0.33, 0.40, 0.50]
 prob_drawdowns = [np.mean(np.array(drawdowns) >= thresh) * 100 for thresh in umbral_drawdowns]
 
-# Estadísticas
-capital_array = np.array(capital_final)
+# Resultados
 print(f"\n📊 RESULTADOS DE SIMULACIÓN ({num_simulaciones} repeticiones):")
-print(f"Promedio final: ${np.mean(capital_array):.2f}")
-print(f"Mediana final: ${np.median(capital_array):.2f}")
-print(f"Desviación estándar: ${np.std(capital_array):.2f}")
-print(f"% de simulaciones ganadoras: {np.mean(capital_array > capital_inicial)*100:.2f}%")
 
-capFinal = np.mean(capital_array)
-sobrante = capFinal - capital_inicial
-porcentajeDeRentabilidad = (sobrante / capital_inicial) * 100
-print(f"El porcentaje Promedio de Rentabilidad es: {porcentajeDeRentabilidad:.2f}%")
+print(f"Promedio final: ${media_final:.2f}")
+print(f"Mediana final: ${mediana_final:.2f}")
+print(f"Desviación estándar: ${desviacion_std:.2f}")
+print(f"% de simulaciones ganadoras: {np.mean(capital_array > capital_inicial) * 100:.2f}%")
+rentabilidad = ((media_final - capital_inicial) / capital_inicial) * 100
+print(f"El porcentaje Promedio de Rentabilidad es: {rentabilidad:.2f}%")
+
 
 # Probabilidades de drawdowns
 print("\n📉 Probabilidades de alcanzar drawdowns:")
-for umbral in umbral_drawdowns:
-    prob = np.mean(np.array(drawdowns) >= umbral) * 100
+for umbral, prob in zip(umbral_drawdowns, prob_drawdowns):
     print(f"Probabilidad de un drawdown >= {int(umbral*100)}%: {prob:.2f}%")
 
 print(f"\n⏱️ Promedio de trades para salir de un drawdown: {np.mean(avg_drawdown_durations):.2f}")
@@ -111,7 +119,7 @@ print(f"📉 Drawdown más largo registrado (en trades): {np.max(max_drawdown_du
 fig, axs = plt.subplots(2, 2, figsize=(16, 10))
 
 # Histograma del capital final
-axs[0, 0].hist(capital_array, bins=50, color='skyblue', edgecolor='black')
+axs[0, 0].hist(capital_array, bins=50, color='skyblue', edgecolor='black', label='Con comisión')
 axs[0, 0].axvline(x=capital_inicial, color='red', linestyle='--', label='Capital inicial')
 axs[0, 0].set_title('Distribución de Capital Final')
 axs[0, 0].set_xlabel('Capital Final ($)')
