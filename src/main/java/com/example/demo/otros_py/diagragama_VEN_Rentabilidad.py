@@ -9,16 +9,17 @@ riesgo_por_trade = 0.005  # 0.50% de riesgo
 ganancia_tp1 = 0.3709
 ganancia_total = 2.20
 perdida_total = -1
-tp1_rate = 0.277778
-tp2_rate = 0.236111
+tp1_rate = 0.273973
+tp2_rate = 0.232877
 loss_rate = 1 - (tp1_rate + tp2_rate)
 
 # Configuraciones de casos de prueba
-num_trades = 528
+num_trades = 66
 num_simulaciones = 10000
+cant_lineas_grafico = 100
 
 # Comisión por operación (Bybit Futuros Taker)
-comision_rate = 0.01  # 0.16% => 0.0016
+comision_rate = 0.024  # 2.4% x el riesgo(0.50%), la comision es por el volumen de operacion(comision de apertura, luego calculamos el cierre tamb).
 
 # Datos para el análisis
 capital_final = []
@@ -60,7 +61,7 @@ for seed in range(num_simulaciones):
     drawdowns.append(max_drawdown)
     capital_final.append(capital)
 
-    if seed < 100:
+    if seed < cant_lineas_grafico:
         equity_curves.append(equity_curve)
 
 # Cálculo de duración de drawdowns
