@@ -3,19 +3,19 @@ import matplotlib.pyplot as plt
 
 # Parámetros del sistema
 capital_inicial = 1000
-riesgo_por_trade = 0.005  # 0.50% de riesgo
+riesgo_por_trade = 0.005  # 0.005 -> 0.50% de riesgo
 
 # Ratios y % aciertos
 ganancia_tp1 = 0.3709
 ganancia_total = 2.20
 perdida_total = -1
-tp1_rate = 0.273973
-tp2_rate = 0.232877
+tp1_rate = 0.265823
+tp2_rate = 0.240506
 loss_rate = 1 - (tp1_rate + tp2_rate)
 
 # Configuraciones de casos de prueba
 num_trades = 66
-num_simulaciones = 10000
+num_simulaciones = 40000
 cant_lineas_grafico = 100
 
 # Comisión por operación (Bybit Futuros Taker)
@@ -25,6 +25,16 @@ comision_rate = 0.024  # 2.4% x el riesgo(0.50%), la comision es por el volumen 
 capital_final = []
 drawdowns = []
 equity_curves = []
+
+
+# otro algoritmo de generacion de randoms
+"""
+import random
+
+for seed in range(num_simulaciones):
+    random.seed(seed)
+    resultados = random.choices(['tp1', 'tp2', 'loss'], weights=[tp1_rate, tp2_rate, loss_rate], k=num_trades)
+"""
 
 for seed in range(num_simulaciones):
     np.random.seed(seed)
@@ -94,7 +104,7 @@ desviacion_std = np.std(capital_array)
 
 
 # Probabilidades de drawdowns
-umbral_drawdowns = [0.02, 0.03, 0.05, 0.10, 0.15, 0.20, 0.25, 0.30, 0.33, 0.40, 0.50]
+umbral_drawdowns = [0.02, 0.03, 0.045, 0.05, 0.10, 0.15, 0.20, 0.25, 0.30, 0.33, 0.40, 0.50]
 prob_drawdowns = [np.mean(np.array(drawdowns) >= thresh) * 100 for thresh in umbral_drawdowns]
 
 # Resultados
@@ -111,7 +121,11 @@ print(f"El porcentaje Promedio de Rentabilidad es: {rentabilidad:.2f}%")
 # Probabilidades de drawdowns
 print("\n📉 Probabilidades de alcanzar drawdowns:")
 for umbral, prob in zip(umbral_drawdowns, prob_drawdowns):
-    print(f"Probabilidad de un drawdown >= {int(umbral*100)}%: {prob:.2f}%")
+    if (umbral == 0.045):
+        print(f"Probabilidad de un drawdown >= {(umbral * 100)}%: {prob:.2f}% (para cuentas de fondeo)")
+    else:
+        print(f"Probabilidad de un drawdown >= {int(umbral * 100)}%: {prob:.2f}%")
+
 
 print(f"\n⏱️ Promedio de trades para salir de un drawdown: {np.mean(avg_drawdown_durations):.2f}")
 print(f"📉 Drawdown más largo registrado (en trades): {np.max(max_drawdown_durations)}")

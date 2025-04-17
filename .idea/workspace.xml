@@ -6,6 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="f5c578e7-eca9-4de6-b476-7111dfbe2195" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo/RentabilityCalculator2TPs.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo/RentabilityCalculator2TPs.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo/otros_py/diagragama_VEN_Rentabilidad.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo/otros_py/diagragama_VEN_Rentabilidad.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -172,7 +173,11 @@
       <workItem from="1744330782253" duration="1832000" />
       <workItem from="1744391416638" duration="453000" />
       <workItem from="1744441702146" duration="54000" />
-      <workItem from="1744481004195" duration="9000" />
+      <workItem from="1744481004195" duration="37000" />
+      <workItem from="1744481314053" duration="191000" />
+      <workItem from="1744914831309" duration="12000" />
+      <workItem from="1744914917529" duration="988000" />
+      <workItem from="1744920889131" duration="33000" />
     </task>
     <servers />
   </component>

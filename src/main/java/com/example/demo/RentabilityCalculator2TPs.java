@@ -11,10 +11,9 @@ public class RentabilityCalculator2TPs {
         final double TP1 = 0.18545; // TP1 CON 0.50% DE RIESGO ES: 0.18545. para el 1% es 0.3709.
         final double TP2 = 1.0751; // TP2 CON 0.50% DE RIESGO ES: 1.0751, TP2 CON 1.00% DE RIESGO ES: 2.132
         final double SL = 0.50; // Porcentaje de stop loss 0.50% DE RIESGO ES: 0.50, SL CON 1.00% DE RIESGO ES: 1
-        final double probabilidadAciertosTP1 = 25;
-        final double probabilidadAciertosTP2 = 25;
+        final double probabilidadAciertosTP1 = 26.5823;
+        final double probabilidadAciertosTP2 = 24.0506;
         final double comisiones = 0.0;
-
 
         /* (ACIERTO MINIMO NICO ALCANZADO!!)
         final double probabilidadAciertosTP1 = 29.0909;
@@ -30,7 +29,7 @@ public class RentabilityCalculator2TPs {
 
         // config pruebas
         int cantidadDeCuentasParaTestear = 10000;
-        int cantidadDeTradesPorCuenta = 44;      //422 mes  //10000   //2500
+        int cantidadDeTradesPorCuenta = 825;      //422 mes  //10000   //2500
 
 
         // mi acierto: probabilidadAciertosTP1 = 29.0323;
