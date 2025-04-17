@@ -9,13 +9,13 @@ riesgo_por_trade = 0.005  # 0.005 -> 0.50% de riesgo
 ganancia_tp1 = 0.3709
 ganancia_total = 2.20
 perdida_total = -1
-tp1_rate = 0.265823
-tp2_rate = 0.240506
+tp1_rate = 0.295823
+tp2_rate = 0.270506
 loss_rate = 1 - (tp1_rate + tp2_rate)
 
 # Configuraciones de casos de prueba
 num_trades = 66
-num_simulaciones = 40000
+num_simulaciones = 10000
 cant_lineas_grafico = 100
 
 # Comisión por operación (Bybit Futuros Taker)
@@ -116,6 +116,8 @@ print(f"Desviación estándar: ${desviacion_std:.2f}")
 print(f"% de simulaciones ganadoras: {np.mean(capital_array > capital_inicial) * 100:.2f}%")
 rentabilidad = ((media_final - capital_inicial) / capital_inicial) * 100
 print(f"El porcentaje Promedio de Rentabilidad es: {rentabilidad:.2f}%")
+ganancia_promedio = media_final - capital_inicial
+print(f"La ganancia Promedio es: ${ganancia_promedio:.2f}")
 
 
 # Probabilidades de drawdowns
